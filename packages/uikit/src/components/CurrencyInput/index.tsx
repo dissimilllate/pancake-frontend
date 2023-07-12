@@ -1,12 +1,12 @@
 import { useMemo, useCallback, ReactNode, MouseEvent } from "react";
 import { Currency, CurrencyAmount } from "@pancakeswap/sdk";
 import { CurrencyLogo } from "../CurrencyLogo";
-import { BalanceInput } from "../BalanceInput";
+import { BalanceInput, BalanceInputProps } from "../BalanceInput";
 import { Flex } from "../Box";
 import { Text } from "../Text";
 import { Button } from "../Button";
 
-interface Props {
+interface Props extends Omit<BalanceInputProps, "onChange" | "onUserInput"> {
   value: string | number;
   onChange: (val: string) => void;
   currency?: Currency;
@@ -15,7 +15,7 @@ interface Props {
   maxText?: ReactNode;
 }
 
-export function CurrencyInput({ currency, balance, value, onChange, balanceText, maxText = "Max" }: Props) {
+export function CurrencyInput({ currency, balance, value, onChange, balanceText, maxText = "Max", ...rest }: Props) {
   const isMax = useMemo(() => balance && value && balance.toExact() === value, [balance, value]);
   const onMaxClick = useCallback(
     (e: MouseEvent) => {
@@ -59,6 +59,7 @@ export function CurrencyInput({ currency, balance, value, onChange, balanceText,
       onUserInput={onChange}
       unit={currencyDisplay}
       currencyValue={balanceDisplay}
+      {...rest}
     />
   );
 }
