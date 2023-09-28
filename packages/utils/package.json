@@ -26,5 +26,8 @@
     "@pancakeswap/localization": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "url-parse": "^1.5.10"
   }
 }
